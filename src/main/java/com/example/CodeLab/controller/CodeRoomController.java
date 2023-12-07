@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import java.util.List;
 
@@ -17,23 +18,24 @@ import java.util.List;
 public class CodeRoomController {
     @Autowired private CodeRoomService codeRoomService;
     @Autowired private MemberService memberService;
-    @GetMapping
-    @ResponseBody
-    public List<CodeRoom> rooms(){
-        return codeRoomService.findAllCodeRoom();
+    @GetMapping()
+    public String rooms(Model model){
+        List<CodeRoom> codeRooms = codeRoomService.findAllCodeRoom();
+        model.addAttribute("codeRooms", codeRooms);
+        return "dashboard";
     }
 
     @PostMapping("/room")
     public String create(@RequestParam("roomName") String roomName,
                          @RequestParam("memberName") String memberName,
-                         Model model){
+                         RedirectAttributes redirectAttributes){
         try{
             Member findMember = memberService.getMember(memberName);
             codeRoomService.createRoom(roomName, findMember.getMemberName());
-            return "dashboard";
+            return "redirect:/rooms";
         } catch (RuntimeException e){
-            model.addAttribute("errorMessage", e.getMessage());
-            return "dashboard";
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/rooms";
         }
     }
 }

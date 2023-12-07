@@ -36,7 +36,11 @@
         </tr>
         </thead>
         <tbody>
-
+            <tr th:each="codeRoom : ${codeRooms}">
+                <td th:text="${codeRoom.roomId}"></td>
+                <td th:text="${codeRoom.roomName}"></td>
+                <td th:text="${codeRoom.ownerName}"></td>
+            </tr>
         </tbody>
     </table>
 </div>

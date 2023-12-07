@@ -21,7 +21,7 @@ public class CodeRoomService {
     }
 
     public void createRoom(String roomName, String ownerName) {
-        if (memberRepository.existsMemberByMemberName(ownerName))
+        if (!memberRepository.existsMemberByMemberName(ownerName))
             throw new RuntimeException("Member not found!");
 
         String roomId = UUID.randomUUID().toString();
