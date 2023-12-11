@@ -37,9 +37,13 @@
         </thead>
         <tbody>
             <tr th:each="codeRoom : ${codeRooms}">
-                <td th:text="${codeRoom.roomId}"></td>
-                <td th:text="${codeRoom.roomName}"></td>
-                <td th:text="${codeRoom.ownerName}"></td>
+                <td th:text="${codeRoom.roomId}"> roomId </td>
+                <td th:text="${codeRoom.roomName}"> roomName </td>
+                <td th:text="${codeRoom.ownerName}"> ownerName </td>
+                <td>
+                    <a th:href="@{'/rooms/' + ${codeRoom.roomId}}">
+                    <button class="btn btn-outline-secondary"> Join </button>
+                </td>
             </tr>
         </tbody>
     </table>

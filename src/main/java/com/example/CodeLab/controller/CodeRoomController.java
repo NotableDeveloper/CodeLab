@@ -38,4 +38,19 @@ public class CodeRoomController {
             return "redirect:/rooms";
         }
     }
+
+    @GetMapping("/{roomId}")
+    public String enterRoom(@PathVariable("roomId") String roomId,
+                            RedirectAttributes redirectAttributes,
+                            Model model){
+        try {
+            CodeRoom codeRoom = codeRoomService.getCodeRoomById(roomId);
+            model.addAttribute("roomInfo", codeRoom);
+            return "coderoom";
+
+        } catch (RuntimeException e){
+            redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
+            return "redirect:/rooms";
+        }
+    }
 }

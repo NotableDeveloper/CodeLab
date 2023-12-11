@@ -34,6 +34,9 @@ public class CodeRoomService {
                 .build();
 
         codeRoomRepository.save(newCodeRoom);
+    }
 
+    public CodeRoom getCodeRoomById(String roomId){
+        return codeRoomRepository.findById(roomId).get();
     }
 }
