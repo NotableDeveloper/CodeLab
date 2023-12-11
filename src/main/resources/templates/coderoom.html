@@ -2,14 +2,52 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
-  <title> Code Room </title>
+  <title>Code Room</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js">
 </head>
 <body>
 <div class="container-fluid p-5 bg-primary text-white text-center">
-  <p th:text="${roomInfo.roomId}"> Room ID </p>
-  <p th:text="${roomInfo.roomName}"> Room Name </p>
+  <p th:text="${roomInfo.roomId}">Room ID</p>
+  <p th:text="${roomInfo.roomName}">Room Name</p>
 </div>
+
+<textarea id="messageInput" placeholder="Type your message"></textarea>
+<button onclick="sendMessage()">Send</button>
+
+<script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
+<script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
+<script src="/webjars/stomp-websocket/2.3.3-1/stomp.min.js"></script>
+
+<script>
+  var stompClient = null;
+
+  function connect() {
+    var socket = new SockJS('/connect');
+    stompClient = Stomp.over(socket);
+    stompClient.connect({}, function (frame) {
+      console.log('Connected: ' + frame);
+      stompClient.subscribe('/sub/source', function (message) {
+        console.log('Received: ' + message.body);
+        // Handle received messages here
+      });
+    });
+  }
+
+  function sendMessage() {
+    var messageInput = document.getElementById('messageInput');
+    var message = messageInput.value;
+
+    if (stompClient && message) {
+      stompClient.send("/pub/source", {}, message);
+      messageInput.value = ''; // Clear the input field
+    }
+  }
+
+  // Connect on page load
+  connect();
+</script>
+
 </body>
 </html>
