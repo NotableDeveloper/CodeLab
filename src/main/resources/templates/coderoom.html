@@ -13,8 +13,16 @@
   <p th:text="${roomInfo.roomName}">Room Name</p>
 </div>
 
-<textarea id="messageInput" placeholder="Type your message"></textarea>
-<button onclick="sendMessage()">Send</button>
+
+<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+  <div>
+    <textarea id="source" style="width: 400px; height: 400px; resize: vertical;"></textarea>
+    <textarea readonly style="width: 400px; height: 400px; resize: vertical;"></textarea>
+  </div>
+  <button onclick="sendMessage()">Send</button>
+</div>
+
+
 
 <script src="/webjars/axios/0.17.1/dist/axios.min.js"></script>
 <script src="/webjars/sockjs-client/1.1.2/sockjs.min.js"></script>
