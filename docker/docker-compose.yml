@@ -33,6 +33,22 @@ services:
     depends_on:
       - maria_db
 
+  msg_broker:
+    build:
+      context: .
+      dockerfile: message_broker.dockerfile
+    ports:
+      - "8081:8081"
+    networks:
+      app-network:
+        ipv4_address: 172.20.1.4
+    environment:
+      - DATABASE_URL
+      - DATABASE_USERNAME
+      - DATABASE_PASSWORD
+    depends_on:
+      - maria_db
+
 networks:
   app-network:
     driver: bridge
