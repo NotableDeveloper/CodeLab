@@ -1,10 +1,10 @@
-package com.example.CodeLab;
+package com.example.MessageBroker;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class CodeLabApplicationTests {
+class MessageBrokerApplicationTests {
 
 	@Test
 	void contextLoads() {
