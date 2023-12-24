@@ -32,7 +32,7 @@
   var stompClient = null;
 
   function connect() {
-    var socket = new SockJS('/connect');
+    var socket = new SockJS('http://172.20.1.4:8081/connect');
     stompClient = Stomp.over(socket);
     stompClient.connect({}, function (frame) {
       console.log('Connected: ' + frame);
@@ -43,17 +43,6 @@
     });
   }
 
-  function sendMessage() {
-    var messageInput = document.getElementById('messageInput');
-    var message = messageInput.value;
-
-    if (stompClient && message) {
-      stompClient.send("/pub/source", {}, message);
-      messageInput.value = ''; // Clear the input field
-    }
-  }
-
-  // Connect on page load
   connect();
 </script>
 
