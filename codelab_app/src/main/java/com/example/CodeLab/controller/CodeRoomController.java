@@ -28,11 +28,13 @@ public class CodeRoomController {
     @PostMapping("/room")
     public String create(@RequestParam("roomName") String roomName,
                          @RequestParam("memberName") String memberName,
+                         Model model,
                          RedirectAttributes redirectAttributes){
         try{
             Member findMember = memberService.getMember(memberName);
-            codeRoomService.createRoom(roomName, findMember.getMemberName());
-            return "redirect:/rooms";
+            CodeRoom createdRoom = codeRoomService.createRoom(roomName, findMember.getMemberName());
+            model.addAttribute("roomInfo", createdRoom);
+            return "coderoom";
         } catch (RuntimeException e){
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
             return "redirect:/rooms";

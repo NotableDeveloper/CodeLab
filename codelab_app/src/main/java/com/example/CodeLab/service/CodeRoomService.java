@@ -20,7 +20,7 @@ public class CodeRoomService {
         return codeRoomRepository.findAll();
     }
 
-    public void createRoom(String roomName, String ownerName) {
+    public CodeRoom createRoom(String roomName, String ownerName) {
         if (!memberRepository.existsMemberByMemberName(ownerName))
             throw new RuntimeException("Member not found!");
 
@@ -33,7 +33,9 @@ public class CodeRoomService {
                 .ownerName(ownerName)
                 .build();
 
-        codeRoomRepository.save(newCodeRoom);
+        CodeRoom savedRoom = codeRoomRepository.save(newCodeRoom);
+
+        return savedRoom;
     }
 
     public CodeRoom getCodeRoomById(String roomId){
