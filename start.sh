@@ -1,5 +1,5 @@
 #! /bin/bash
-sed -i 's/\r//' ./docker/init.sh
+sed -i 's/\r//' ./docker/create_db.sh
 
 cd codelab_app/
 sed -i 's/\r//' gradlew

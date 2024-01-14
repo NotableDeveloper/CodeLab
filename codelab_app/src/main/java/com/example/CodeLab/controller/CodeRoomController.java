@@ -34,6 +34,7 @@ public class CodeRoomController {
             Member findMember = memberService.getMember(memberName);
             CodeRoom createdRoom = codeRoomService.createRoom(roomName, findMember.getMemberName());
             model.addAttribute("roomInfo", createdRoom);
+            model.addAttribute("enterMember", findMember.getMemberName());
             return "coderoom";
         } catch (RuntimeException e){
             redirectAttributes.addFlashAttribute("errorMessage", e.getMessage());
@@ -43,11 +44,13 @@ public class CodeRoomController {
 
     @GetMapping("/{roomId}")
     public String enterRoom(@PathVariable("roomId") String roomId,
+                            @RequestParam("memberName") String memberName,
                             RedirectAttributes redirectAttributes,
                             Model model){
         try {
             CodeRoom codeRoom = codeRoomService.getCodeRoomById(roomId);
             model.addAttribute("roomInfo", codeRoom);
+            model.addAttribute("enterMember", memberName);
             return "coderoom";
 
         } catch (RuntimeException e){

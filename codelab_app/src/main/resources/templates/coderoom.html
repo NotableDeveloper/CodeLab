@@ -15,14 +15,16 @@
 <div class="container-fluid p-5 bg-primary text-white text-center">
   <p th:text="${roomInfo.roomId}">Room ID</p>
   <p th:text="${roomInfo.roomName}">Room Name</p>
+  <p> Hello ! <span th:text="${enterMember}">Member Name</span> </p>
 </div>
 
 <div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
   <div>
-    <textarea id="source" style="width: 400px; height: 400px; resize: vertical;"></textarea>
-    <textarea readonly style="width: 400px; height: 400px; resize: vertical;"></textarea>
+    <textarea id="source" style="width: 400px; height: 400px; resize: vertical;"
+              th:readonly="${roomInfo.ownerName ne enterMember}"></textarea>
   </div>
 </div>
+
 
 <script type="text/javascript" src="/static/sendMessage.js"></script>
 

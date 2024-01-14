@@ -10,12 +10,12 @@ public class MemberService {
     @Autowired
     private MemberRepository memberRepository;
 
-    public void registry(String memberName){
+    public Member registry(String memberName){
         if(memberRepository.existsMemberByMemberName(memberName))
             throw new RuntimeException("Already exists member!");
 
         Member newMember = Member.builder().memberName(memberName).build();
-        memberRepository.save(newMember);
+        return memberRepository.save(newMember);
     }
 
     public Member getMember(String memberName){
