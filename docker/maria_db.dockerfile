@@ -1,3 +1,3 @@
 FROM mariadb:latest
 
-COPY init.sh /docker-entrypoint-initdb.d
+COPY create_db.sh /docker-entrypoint-initdb.d

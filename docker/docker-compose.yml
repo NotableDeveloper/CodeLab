@@ -6,7 +6,7 @@ services:
       context: .
       dockerfile: maria_db.dockerfile
     volumes:
-      - db_data:/var/lib/mysql
+      - db_volume:/var/lib/mysql
     environment:
       - DATABASE_USERNAME
       - MARIADB_ROOT_PASSWORD
@@ -20,7 +20,7 @@ services:
   codelab:
     build:
       context: .
-      dockerfile: application.dockerfile
+      dockerfile: codelab.dockerfile
     ports:
       - "8080:8080"
     networks:
@@ -58,4 +58,4 @@ networks:
         - subnet: 172.20.1.0/24
 
 volumes:
-  db_data:
+  db_volume:
