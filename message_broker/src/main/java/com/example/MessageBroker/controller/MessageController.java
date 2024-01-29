@@ -1,5 +1,6 @@
 package com.example.MessageBroker.controller;
 
+import com.example.MessageBroker.domain.ChatMessage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.messaging.simp.SimpMessageSendingOperations;
@@ -11,7 +12,7 @@ public class MessageController {
   private final SimpMessageSendingOperations messagingTemplate;
 
   @MessageMapping("/message")
-  public void message(String message){
-    System.out.println("Msg : " + message);
+  public void message(ChatMessage message){
+    messagingTemplate.convertAndSend("/sub/rooms/" + message.getRoomId(), message.getMessage());
   }
 }

@@ -11,9 +11,16 @@
 </head>
 
 <body>
+<div th:if="${not #strings.isEmpty(errorMessage)}">
+  <script th:inline="javascript">
+    /*<![CDATA[*/
+        alert([[${errorMessage}]]);
+    /*]]>*/
+  </script>
+</div>
 
 <div class="container-fluid p-5 bg-primary text-white text-center">
-  <p th:text="${roomInfo.roomId}">Room ID</p>
+  <p id="roomId" th:text="${roomInfo.roomId}">Room ID</p>
   <p th:text="${roomInfo.roomName}">Room Name</p>
   <p> Hello ! <span th:text="${enterMember}">Member Name</span> </p>
 </div>
@@ -25,8 +32,7 @@
   </div>
 </div>
 
-
-<script type="text/javascript" src="/static/sendMessage.js"></script>
+<script type="text/javascript" src="/static/MessageHandler.js"></script>
 
 </body>
 </html>
