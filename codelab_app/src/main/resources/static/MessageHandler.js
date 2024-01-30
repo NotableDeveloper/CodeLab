@@ -10,11 +10,19 @@ stompClient.connect({}, function() {
     });
 });
 
-document.getElementById('source').addEventListener('keydown', function (event) {
-    if (event.keyCode === 13 && !event.shiftKey) {
+document.getElementById('source').addEventListener('keydown', function(event) {
+    if (event.key === 'Enter' && !event.shiftKey) {
+        event.preventDefault();
+        var textarea = event.target;
+        var start = textarea.selectionStart;
+        var end = textarea.selectionEnd;
+        var value = textarea.value;
+        textarea.value = value.substring(0, start) + '\n' + value.substring(end);
+        textarea.selectionStart = textarea.selectionEnd = start + 1;
         sendMessage();
     }
 });
+
 
 function sendMessage() {
     var message = document.getElementById('source').value;
@@ -23,6 +31,11 @@ function sendMessage() {
         "message" : message
     };
     stompClient.send('/pub/message', {}, JSON.stringify(chatMessage));
+}
+
+function sendCompile() {
+    var sourceCode = document.getElementById('source').value;
+    stompClient.send('/pub/compile', {}, JSON.stringify(sourceCode));
 }
 
 function displayMessage(content) {

@@ -25,10 +25,22 @@
   <p> Hello ! <span th:text="${enterMember}">Member Name</span> </p>
 </div>
 
-<div style="display: flex; justify-content: center; align-items: center; height: 100vh;">
+<div style="display: flex; flex-direction: column; align-items: center; height: 100vh;">
+  <br>
   <div>
-    <textarea id="source" style="width: 400px; height: 400px; resize: vertical;"
+    <H1> Source </H1>
+    <textarea id="source" style="width: 600px; height: 400px;"
               th:readonly="${roomInfo.ownerName ne enterMember}"></textarea>
+  </div>
+
+  <div style="display: flex; justify-content: flex-end; width: 600px; height: 50px;">
+    <button class="btn btn-outline-secondary" onclick="sendCompile()"> Compile </button>
+  </div>
+
+  <div>
+    <H1> Result </H1>
+    <textarea readonly id="result" style="width: 600px; height: 200px;">
+    </textarea>
   </div>
 </div>
 

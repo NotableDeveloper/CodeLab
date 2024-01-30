@@ -15,4 +15,9 @@ public class MessageController {
   public void message(ChatMessage message){
     messagingTemplate.convertAndSend("/sub/rooms/" + message.getRoomId(), message.getMessage());
   }
+
+  @MessageMapping("/compile")
+  public void compile(String sourceCode){
+    System.out.println("received : " + sourceCode);
+  }
 }
