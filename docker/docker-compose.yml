@@ -48,6 +48,8 @@ services:
       - DATABASE_PASSWORD
     depends_on:
       - maria_db
+    volumes:
+      - /mnt/c/src:/src
   
 networks:
   app-network:

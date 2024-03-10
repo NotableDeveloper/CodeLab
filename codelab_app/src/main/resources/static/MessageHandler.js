@@ -21,6 +21,16 @@ document.getElementById('source').addEventListener('keydown', function(event) {
         textarea.selectionStart = textarea.selectionEnd = start + 1;
         sendMessage();
     }
+
+    else if(event.keyCode === 9){
+           event.preventDefault();
+           var textarea = event.target;
+           var start = textarea.selectionStart;
+           var end = textarea.selectionEnd;
+           var value = textarea.value;
+           textarea.value = value.substring(0, start) + '\t' + value.substring(end);
+           textarea.selectionStart = textarea.selectionEnd = start + 1;
+    }
 });
 
 

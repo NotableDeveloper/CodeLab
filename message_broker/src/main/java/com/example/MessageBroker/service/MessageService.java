@@ -21,7 +21,10 @@ public class MessageService {
         messagingTemplate.convertAndSend(getDestinationRoom(roomId), chatMessage);
     }
 
-    public void compile(String roomId, String content) {
+    public void compile(String roomId, String content){
+        /*
+            To do : Code Compile
+        */
         ChatMessage chatMessage = ChatMessage.builder()
                 .messageType(MessageType.COMPILE)
                 .roomId(roomId)
