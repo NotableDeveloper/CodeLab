@@ -21,24 +21,48 @@ document.getElementById('source').addEventListener('keydown', function(event) {
         textarea.selectionStart = textarea.selectionEnd = start + 1;
         sendMessage();
     }
+
+    else if(event.keyCode === 9){
+           event.preventDefault();
+           var textarea = event.target;
+           var start = textarea.selectionStart;
+           var end = textarea.selectionEnd;
+           var value = textarea.value;
+           textarea.value = value.substring(0, start) + '\t' + value.substring(end);
+           textarea.selectionStart = textarea.selectionEnd = start + 1;
+    }
 });
 
 
 function sendMessage() {
-    var message = document.getElementById('source').value;
+    var content = document.getElementById('source').value;
     var chatMessage = {
         "roomId" : roomId,
-        "message" : message
+        "content" : content
     };
     stompClient.send('/pub/message', {}, JSON.stringify(chatMessage));
 }
 
 function sendCompile() {
     var sourceCode = document.getElementById('source').value;
-    stompClient.send('/pub/compile', {}, JSON.stringify(sourceCode));
+    var chatMessage = {
+        "roomId" : roomId,
+        "content" : sourceCode
+    };
+    stompClient.send('/pub/compile', {}, JSON.stringify(chatMessage));
 }
 
-function displayMessage(content) {
-    var messageArea = document.getElementById('source');
-    messageArea.value = content
+function displayMessage(message) {
+    var receivedMessage = JSON.parse(message);
+    console.log(receivedMessage);
+
+    if(receivedMessage.messageType == "SOURCE"){
+        var messageArea = document.getElementById('source');
+        messageArea.value = receivedMessage.content;
+    }
+
+    else {
+        var messageArea = document.getElementById('result');
+        messageArea.value = receivedMessage.content;
+    }
 }

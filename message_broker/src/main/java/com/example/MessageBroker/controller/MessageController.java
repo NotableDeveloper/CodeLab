@@ -1,23 +1,25 @@
 package com.example.MessageBroker.controller;
 
 import com.example.MessageBroker.domain.ChatMessage;
+import com.example.MessageBroker.service.MessageService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.messaging.handler.annotation.MessageMapping;
-import org.springframework.messaging.simp.SimpMessageSendingOperations;
 import org.springframework.stereotype.Controller;
 
 @RequiredArgsConstructor
 @Controller
 public class MessageController {
-  private final SimpMessageSendingOperations messagingTemplate;
+  @Autowired
+  MessageService messageService;
 
   @MessageMapping("/message")
-  public void message(ChatMessage message){
-    messagingTemplate.convertAndSend("/sub/rooms/" + message.getRoomId(), message.getMessage());
+  public void receivedCodeMessage(ChatMessage message){
+    messageService.propagateMessage(message.getRoomId(), message.getContent());
   }
 
   @MessageMapping("/compile")
-  public void compile(String sourceCode){
-    System.out.println("received : " + sourceCode);
+  public void receivedCompileMessage(ChatMessage message){
+    messageService.compile(message.getRoomId(), message.getContent());
   }
 }
